@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>行业html样式、类去除</title>
+	<style type="text/css">
+		.title{font-size: 22px;text-align: center;}
+		.container{margin-left: 50%;left: -450px;position: absolute;border: solid 1px black;width: 900px;vertical-align: middle;text-align: center;}
+		.box{clear: both;width: 800px;height: 350px;margin: 0 auto;}
+		.btnBox{width: 800px;margin: 0 auto;text-align: right;}
+		.text{width: 100%;height: 90%;border: solid black 1px;}
+		#dealBox{display: none;visibility: hidden;}
+	</style>
+	<link rel="stylesheet" type="text/css" href="./basic-sun.css">
+</head>
+<body>
+	<div class="container" style="test">
+		<div class="title">行内html内容去样式</div>
+		<div class="htmlContent box">
+			<textarea name="" id="undeal" class="input-default text"></textarea>
+		</div>
+		<div class="btnBox">
+			<div id="changeCssClass" class="btn-green ">去class及行内样式</div>
+			<div id="changeCss" class="btn-green ">去行内样式</div>
+			<div id="changeClass" class="btn-green ">去class</div>
+			<div id="reset" class="btn-green ">重置</div>
+		</div>
+		<div class="finalhtml box">
+			<textarea name="" id="final" class="input-default text"></textarea>
+		</div>
+		<div id="dealBox">
+			
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	//根据id获取
+	function byId(id){
+		return document.getElementById(id); 
+	}
+
+	//根据className获取element
+	function byClass(className){
+		return document.getElementByClass(className);
+	}
+
+	//根据tag获取element
+	function byTag(tagName,element){
+		if(element==null){
+			return document.body.getElementsByTagName(tagName);
+		}
+		return element.getElementsByTagName(tagName);
+	}
+
+	//onload后绑定事件
+	onload = function(){
+		addEvent(byId("changeCssClass"),"click",changeCssClass);
+		addEvent(byId("changeCss"),"click",changeCss);
+		addEvent(byId("changeClass"),"click",changeClass);
+		addEvent(byId("reset"),"click",reset);
+	}
+
+	//转换
+	function changeCssClass(){
+		byId("dealBox").innerHTML = byId("undeal").value;
+		var tags = byTag("*",byId("dealBox"));
+		for (var i = 0; i < tags.length; i++) {
+		    tags[i].removeAttribute('style');
+		    tags[i].removeAttribute('class');
+		}
+		byId("final").innerHTML = byId("dealBox").innerHTML;
+	}
+
+	//转换
+	function changeCss(){
+		byId("dealBox").innerHTML = byId("undeal").value;
+		var tags = byTag("*",byId("dealBox"));
+		for (var i = 0; i < tags.length; i++) {
+		    tags[i].removeAttribute('style');
+		}
+
+		byId("final").innerHTML = byId("dealBox").innerHTML;
+	}
+
+	//转换
+	function changeClass(){
+		byId("dealBox").innerHTML = byId("undeal").value;
+		var tags = byTag("*",byId("dealBox"));
+		for (var i = 0; i < tags.length; i++) {
+		    tags[i].removeAttribute('class');
+		}
+
+		byId("final").innerHTML = byId("dealBox").innerHTML;
+	}	
+
+	//重置
+	function reset(){
+		byId("undeal").value = "";
+		// byId("final").value = "";
+		byId("undeal").focus();
+	}
+
+	//添加事件
+	function addEvent(obj,type,handle){
+	    try{  // Chrome、FireFox、Opera、Safari、IE9.0及其以上版本
+	        obj.addEventListener(type,handle,false);
+	    }catch(e){
+	        try{  // IE8.0及其以下版本
+	            obj.attachEvent('on' + type,handle);
+	        }catch(e){  // 早期浏览器
+	            obj['on' + type] = handle;
+	        }
+	    }
+	}
+
+</script>
+</html>
